@@ -11,6 +11,9 @@
 </head>
 
 <body>
+@extends('layouts.master')
+@section('pageTitle', 'Home') 
+@section('main')
   <div class="task-list-container">
     <h1 class="task-list-heading">Task List</h1>
 
@@ -49,6 +52,7 @@
         </div>
     @endforeach
   </div>
+  @endsection
 </body>
 
 </html>
