@@ -28,6 +28,7 @@ class TaskController extends Controller
         $pageTitle = 'Edit Task';
         $task = Task::find($id); // Diperbarui
 
+
         return view('tasks.edit', ['pageTitle' => $pageTitle, 'task' => $task]);
     }
 
@@ -81,4 +82,19 @@ class TaskController extends Controller
         
        
     }
+
+    public function delete($id)
+    {
+        $pageTitle = 'Delete Task';
+        $task = Task::find($id);
+        $task->delete();
+        return view('tasks.delete', ['pageTitle' => $pageTitle, 'task' => $task]);
+    }
+
+    public function destroy($id)
+    {
+        $task = Task::find($id);
+        return redirect()->route('tasks.index');
+    }
+
 }
