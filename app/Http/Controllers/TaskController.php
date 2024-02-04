@@ -26,9 +26,8 @@ class TaskController extends Controller
     public function edit($id)
     {
         $pageTitle = 'Edit Task';
-        $tasks = Task::find($id); // Diperbarui
+        $task = Task::find($id); // Diperbarui
 
-        $task = $tasks[$id - 1];
 
         return view('tasks.edit', ['pageTitle' => $pageTitle, 'task' => $task]);
     }
@@ -38,4 +37,64 @@ class TaskController extends Controller
         $pageTitle = 'Add Text';
         return view('tasks.create',['pageTitle' => $pageTitle]);
     }
+
+    public function store(Request $request)
+    {
+        $request->validate(
+            [
+                'name' => 'required',
+                'due_date' => 'required',
+                'status' => 'required',
+            ],
+            $request->all()
+        );
+
+        Task::create([
+            'name' => $request->name,
+            'detail' => $request->detail,
+            'due_date' => $request->due_date,
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('tasks.index');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate(
+            [
+                'name' => 'required',
+                'due_date' => 'required',
+                'status' => 'required',
+            ],
+            $request->all()
+        );
+        
+        $task = Task::find($id);
+        $task->update([
+            'name' => $request->name,
+            'detail' => $request->detail,
+            'due_date' => $request->due_date,
+            'status' => $request->status,
+        ]);
+        
+        return redirect()->route('tasks.index');
+        
+       
+    }
+
+    public function delete($id)
+    {
+        $pageTitle = 'Delete Task';
+        $task = Task::find($id);
+        $task->delete();
+        return view('tasks.delete', ['pageTitle' => $pageTitle, 'task' => $task]);
+    }
+
+    public function destroy($id)
+    {
+        $task = Task::find($id);
+        return redirect()->route('tasks.index');
+    }
+
 }
