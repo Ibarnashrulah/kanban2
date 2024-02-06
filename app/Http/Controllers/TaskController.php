@@ -106,18 +106,14 @@ class TaskController extends Controller
         $filteredTasks = $allTasks->groupBy('status');
 
         $tasks = [
-            Task::STATUS_NOT_STARTED => $filteredTasks->get(
-                Task::STATUS_NOT_STARTED, []
-            ),
-            Task::STATUS_IN_PROGRESS => $filteredTasks->get(
-                Task::STATUS_IN_PROGRESS, []
-            ),
-            Task::STATUS_IN_REVIEW => $filteredTasks->get(
-                Task::STATUS_IN_REVIEW, []
-            ),
-            Task::STATUS_COMPLETED => $filteredTasks->get(
-                Task::STATUS_COMPLETED, []
-            ),
+            Task::STATUS_NOT_STARTED => $filteredTasks->get
+            (Task::STATUS_NOT_STARTED, []),
+            Task::STATUS_IN_PROGRESS => $filteredTasks->get
+            (Task::STATUS_IN_PROGRESS, []),
+            Task::STATUS_IN_REVIEW => $filteredTasks->get
+            (Task::STATUS_IN_REVIEW, []),
+            Task::STATUS_COMPLETED => $filteredTasks->get
+            (Task::STATUS_COMPLETED, []),
         ];
 
 
@@ -126,5 +122,16 @@ class TaskController extends Controller
             'tasks' => $tasks,
         ]);
     }
+
+    public function move(int $id, Request $request)
+{
+        $task = Task::findOrFail($id);
+
+        $task->update([
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('tasks.progress');
+}
 
 }
