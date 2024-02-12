@@ -37,4 +37,5 @@ Route::prefix('tasks')
         Route::delete('/{id}', 'destroy')->name('destroy');
         Route::get('progress', 'progress')->name('progress');
         Route::patch('{id}/move', 'move')->name('move');
+        // Route::patch('{id}/complete', 'complete')->name('complete');
     });

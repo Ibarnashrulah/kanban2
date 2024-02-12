@@ -103,10 +103,12 @@ body {
     display: flex;
     margin-bottom: 30px;
     position: relative;
+    
 }
 
 .task-list-task-buttons a {
     text-decoration: none;
+    
 }
 
 .task-list-button {

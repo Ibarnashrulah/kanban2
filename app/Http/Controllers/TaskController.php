@@ -124,7 +124,7 @@ class TaskController extends Controller
     }
 
     public function move(int $id, Request $request)
-{
+    {
         $task = Task::findOrFail($id);
 
         $task->update([
@@ -132,6 +132,6 @@ class TaskController extends Controller
         ]);
 
         return redirect()->route('tasks.progress');
-}
+    }
 
 }
