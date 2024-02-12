@@ -5,28 +5,37 @@
     <h1 class="task-list-heading">Task List</h1>
 
     <div class="task-list-task-buttons">
-    <a href="{{ route('tasks.create') }}">
-      <button  class="task-list-button">
-        <span class="material-icons">add</span>Add task
-      </button>
-    </a>
+        <a href="{{ route('tasks.create') }}">
+            <button  class="task-list-button">
+                  <span class="material-icons">add</span>Add task
+            </button>
+        </a>
     </div>
 
     <div class="task-list-table-head">
-      <div class="task-list-header-task-name">Task Name</div>
-      <div class="task-list-header-detail">Detail</div>
-      <div class="task-list-header-due-date">Due Date</div>
-      <div class="task-list-header-progress">Progress</div>
+        <div class="task-list-header-task-name">Task Name</div>
+        <div class="task-list-header-detail">Detail</div>
+        <div class="task-list-header-due-date">Due Date</div>
+        <div class="task-list-header-progress">Progress</div>
     </div>
 
     @foreach ($tasks as $index => $task)
-      <div class="table-body">
-        <div class="table-body-task-name">
-          <span class="material-icons @if ($task->status == 'completed') check-icon-completed @else check-icon @endif" >
-            check_circle
-          </span>
-          {{ $task->name }}
-        </div>
+        <div class="table-body">
+            <div class="table-body-task-name">
+                  <span>
+                        @if ($task->status == 'completed')
+                            <div class ="material-icons task-progress-card-top-checked">check_circle </div>
+                        @else 
+                            <form action="{{ route('tasks.move', ['id' => $task->id, 'status' => 'completed']) }}"  method="POST"
+                                id="setcompleted-{{$task->id}}">
+                                @method('patch')
+                                @csrf
+                                <button type="submit" class="material-icons task-progress-card-top-check">check_circle</button>
+                            </form>
+                        @endif  
+                  </span>
+                  {{ $task->name }}
+              </div>
         <div class="table-body-detail"> {{ $task->detail }} </div>
         <div class="table-body-due-date"> {{ $task->due_date }} </div>
         <div class="table-body-progress">
